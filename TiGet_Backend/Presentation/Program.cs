@@ -3,7 +3,6 @@ using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
 using Infrastructure.Context;
 using Microsoft.Data.SqlClient;
 
