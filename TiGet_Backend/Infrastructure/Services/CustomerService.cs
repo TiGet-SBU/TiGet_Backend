@@ -47,7 +47,7 @@ public class CustomerService : ICustomerService
 
         // Save the user entity to the repository
         await _unitOfWork.CustomerRepository.AddAsync(newUser);
-
+        await _unitOfWork.SaveAsync();
         // Return a JWT token
         var response = new CustomerRegisterResponse { 
             Email = newUser.Email,
