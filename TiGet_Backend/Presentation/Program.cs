@@ -4,6 +4,9 @@ using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+using Infrastructure.Context;
+using Microsoft.Data.SqlClient;
+
 namespace Presentation
 {
     public class Program
@@ -13,6 +16,9 @@ namespace Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            // context add
+            builder.Services.AddDbContext<ApplicationDbContext>();
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
