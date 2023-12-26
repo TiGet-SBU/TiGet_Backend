@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
@@ -16,11 +17,11 @@ public interface IAuthenticationService
 
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly IUserRepository _userRepository; // Assume you have IUserRepository
+    private readonly ICustomerRepository _userRepository; // Assume you have IUserRepository
     private readonly string _jwtSecret = "your_jwt_secret_key"; // Replace with a secure key
     private readonly int _jwtExpirationInMinutes = 1440; // Token expiration time
 
-    public AuthenticationService(IUserRepository userRepository)
+    public AuthenticationService(ICustomerRepository userRepository)
     {
         _userRepository = userRepository;
     }
@@ -34,18 +35,21 @@ public class AuthenticationService : IAuthenticationService
         }
 
         // Check if email is unique
-        if (await _userRepository.Exists(u => u.Email == registerDTO.Email))
+        if (await _userRepository.GetByConditionAsync(e => e.Email == registerDTO.Email) != null)
         {
             throw new InvalidOperationException("Email is already registered");
         }
 
         // Create a new concrete user entity
-        var newUser = new ApplicationUser(
-            registerDTO.Role,
-            registerDTO.Email,
-            HashPassword(registerDTO.Password),
-            registerDTO.PhoneNumber
-        );
+        var newUser = new Customer
+        {
+            Id = Guid.NewGuid(),
+            Role = Role.Customer,
+            Email = registerDTO.Email,
+            PasswordHash =  HashPassword(registerDTO.Password),
+            PhoneNumber= registerDTO.PhoneNumber,
+            CreatedDate = DateTime.Now,
+        };
 
         // Save the user entity to the repository
         await _userRepository.AddAsync(newUser);
@@ -63,7 +67,7 @@ public class AuthenticationService : IAuthenticationService
         }
 
         // Find the user by email
-        var user = await _userRepository.GetByEmailAsync(loginDTO.Email);
+        var user = await _userRepository.GetByConditionAsync(e => e.Email == loginDTO.Email);
 
         // Check if the user exists and the password is correct
         if (user != null && VerifyPassword(loginDTO.Password, user.PasswordHash))

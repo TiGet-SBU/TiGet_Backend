@@ -24,8 +24,6 @@ namespace Infrastructure.Extensions.Configurations
                 .HasForeignKey(e => e.CityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Ignore BirthDate property
-            builder.Ignore(e => e.Location);
         }
     }
 }

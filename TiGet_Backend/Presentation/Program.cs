@@ -1,10 +1,10 @@
+using Application.Interfaces.Repositories;
 using Domain.Entities;
+using FluentAssertions.Common;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Infrastructure.Context;
-using Microsoft.Data.SqlClient;
+using Presentation.Installer;
 
 namespace Presentation
 {
@@ -12,18 +12,23 @@ namespace Presentation
     {
         public static void Main(string[] args)
         {
+
+            var builder = WebApplication.CreateBuilder(args).RegisterServices();
+
+            var app = builder.Build().SetupMiddlewares();
+
+            app.Run();
+
+            /*
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            // context add
-            builder.Services.AddDbContext<ApplicationDbContext>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 
             var configuration = builder.Configuration;
 
@@ -46,6 +51,7 @@ namespace Presentation
             app.MapControllers();
 
             app.Run();
+            */
         }
     }
 }
