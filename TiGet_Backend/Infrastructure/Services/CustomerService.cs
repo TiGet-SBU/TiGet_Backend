@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs;
 using Application.DTOs.CustomerDTO.Auth;
+using Application.DTOs.TicketDTO;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
@@ -116,5 +117,10 @@ public class CustomerService : ICustomerService
         // Implement password verification logic (e.g., using BCrypt or Identity Framework)
         // For simplicity, we'll use a basic example
         return enteredPassword == storedPasswordHash;
+    }
+
+    public Task<IEnumerable<TicketGetResponse>> GetAllTickets()
+    {
+        throw new NotImplementedException();
     }
 }
