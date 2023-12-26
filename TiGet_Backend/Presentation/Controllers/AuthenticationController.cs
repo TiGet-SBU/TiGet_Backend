@@ -2,43 +2,46 @@
 using System.Threading.Tasks;
 using Application.DTOs;
 using Microsoft.AspNetCore.Authentication;
+using Application.DTOs.CustomerDTO.Auth;
+using Application.Interfaces.Services;
 
 [Route("api/auth")]
 [ApiController]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly ICustomerService _customerService;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    public AuthenticationController(ICustomerService customerService)
     {
-        _authenticationService = authenticationService;
+        _customerService = customerService;
     }
 
+    
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] UserRegisterDTO registerDTO)
+    public async Task<IActionResult> Register([FromBody] CustomerRegisterRequest registerDTO)
     {
         try
         {
-            var token = await _authenticationService.RegisterAsync(registerDTO);
-            return Ok(new { Token = token });
+            var token = await _customerService.Register(registerDTO);
+            return Ok(token);
         }
         catch (Exception ex)
         {
-            return BadRequest(new { Message = ex.Message });
+            return BadRequest(ex.Message);
         }
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] UserLoginDTO loginDTO)
+    public async Task<IActionResult> Login([FromBody] CustomerLoginRequest loginDTO)
     {
         try
         {
-            var token = await _authenticationService.LoginAsync(loginDTO);
-            return Ok(new { Token = token });
+            var token = await _customerService.Login(loginDTO);
+            return Ok(token);
         }
         catch (Exception ex)
         {
-            return Unauthorized(new { Message = ex.Message });
+            return Unauthorized(ex.Message);
         }
     }
 }
