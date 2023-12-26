@@ -12,7 +12,7 @@ namespace Application.Interfaces.Services
     {
         public Task<CustomerRegisterResponse> Register(CustomerRegisterRequest req);
         public Task<CustomerLoginResponse> Login(CustomerLoginRequest req);
-        public Task<IEnumerable<TicketGetResponse>> GetAllTickets();
+        public Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req);
 
     }
 }

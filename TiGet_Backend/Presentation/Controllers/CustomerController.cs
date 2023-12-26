@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.CustomerDTO.Auth;
 using Application.Interfaces.Services;
+using Application.DTOs.TicketDTO;
 
 [Route("api/customer")]
 [ApiController]
@@ -16,11 +17,11 @@ public class CustomerController : ControllerBase
     
     [HttpPost]
     [Route("singup")]
-    public async Task<IActionResult> Register([FromBody] CustomerRegisterRequest registerDTO)
+    public async Task<IActionResult> Register([FromBody] CustomerRegisterRequest req)
     {
         try
         {
-            var response = await _customerService.Register(registerDTO);
+            var response = await _customerService.Register(req);
             return Ok(response);
         }
         catch (Exception ex)
@@ -31,16 +32,31 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromBody] CustomerLoginRequest loginDTO)
+    public async Task<IActionResult> Login([FromBody] CustomerLoginRequest req)
     {
         try
         {
-            var response = await _customerService.Login(loginDTO);
+            var response = await _customerService.Login(req);
             return Ok(response);
         }
         catch (Exception ex)
         {
             return Unauthorized(ex.Message);
+        }
+    }
+
+    [HttpPost]
+    [Route("tickets")]
+    public async Task<IActionResult> GetTickets(TicketGetAllRequest req)
+    {
+        try
+        {
+            var resposne = await _customerService.GetAllTickets(req);
+            return Ok(resposne);
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
 }

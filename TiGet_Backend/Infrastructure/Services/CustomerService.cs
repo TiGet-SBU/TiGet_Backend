@@ -104,7 +104,26 @@ public class CustomerService : ICustomerService
         throw new InvalidOperationException("Invalid login credentials");
     }
 
-    private string GenerateJwtToken(Customer user)
+    public async Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req)
+    {
+        var ans = await _unitOfWork.TicketRespsitory.GetAllAsync(req.first, req.last, req.condition,
+            "Vehicle", "Company", "Source", "Destination");
+
+        IEnumerable<TicketGetResponse> response = ans.Select(e => new TicketGetResponse
+        {
+            Source = e.Source,
+            Destination = e.Destination,
+            Company = e.Company,
+            Price = e.Price,
+            TimeToGo = e.TimeToGo,
+            Vehicle = e.Vehicle,
+        });
+
+        return response;
+    }
+
+    // ----------
+    private string GenerateJwtToken(User user)
     {
         var _jwtSecret = GenerateRandomKey(256);
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -138,8 +157,4 @@ public class CustomerService : ICustomerService
         return BCrypt.Net.BCrypt.Verify(enteredPassword, storedPasswordHash);
     }
 
-    public Task<IEnumerable<TicketGetResponse>> GetAllTickets()
-    {
-        throw new NotImplementedException();
-    }
 }
