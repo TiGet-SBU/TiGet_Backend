@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Repositories
 {
-    public interface IUserRepository
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
         Task<User> GetByIdAsync(Guid userId);
         Task<User> GetByEmailAsync(string email);
-        Task<IEnumerable<User>> GetAllAsync();
-        Task AddAsync(User user);
+
+        // do we really need? 
         Task<bool> Exists(Func<User, bool> predicate);
     }
 }
