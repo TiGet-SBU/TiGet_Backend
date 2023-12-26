@@ -11,10 +11,10 @@ namespace Application.Interfaces.Repositories
     public interface IBaseRepository<T> where T : BaseEntity
     {
         Task<T?> GetByConditionAsync(Expression<Func<T, bool>> condition, params string[] includes);
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? condition = null, params string[] includes);
+        Task<IEnumerable<T>> GetAllAsync(int first = 0, int last = int.MaxValue, Expression<Func<T, bool>>? condition = null, params string[] includes);
         Task AddAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task UpdateAsync(T entity);
+        void Delete(T entity);
+        void Update(T entity);
 
     }
 }
