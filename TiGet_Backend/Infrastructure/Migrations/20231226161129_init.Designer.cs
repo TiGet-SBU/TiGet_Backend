@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231226112634_init")]
+    [Migration("20231226161129_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Domain.Entities.Company", b =>
@@ -94,9 +94,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -133,9 +130,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("819482b4-0b23-464d-87ce-cb1075b15ad2"),
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4059),
+                            Id = new Guid("3ff21282-a3c1-4bcb-b741-1118a95e40c7"),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(5763),
                             Email = "admin@admin.com",
                             FirstName = "",
                             Gender = 0,
@@ -281,49 +277,49 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ccb24039-d4f0-45ff-96cc-b1eff1c2b371"),
+                            Id = new Guid("ea389a2f-872e-4598-8099-a2c631db68f3"),
                             Capacity = 30,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4310),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6095),
                             Name = "Bus1",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("2e1edcb4-4ac5-45ab-86ee-bec088259c33"),
+                            Id = new Guid("c6ad78ed-a0dc-4644-ad40-22f59d61be5c"),
                             Capacity = 40,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4317),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6100),
                             Name = "Bus2",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("4cf96abf-6dbc-4081-abe8-a087ea14965d"),
+                            Id = new Guid("972e5c86-4cdd-405d-a443-77fc06d532d5"),
                             Capacity = 20,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4320),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6104),
                             Name = "Bus3",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("9afaeb6b-39f7-4f21-a046-ff33e8e24376"),
+                            Id = new Guid("797252cf-654a-47a1-a28f-bad5752b61fb"),
                             Capacity = 70,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4322),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6108),
                             Name = "Train1",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("21aa447b-2423-4d3b-b54c-32b3daadfc96"),
+                            Id = new Guid("fde2f1cd-3be5-4f43-8216-0ef6dc637e6f"),
                             Capacity = 88,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4325),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6111),
                             Name = "Train2",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("e64018c0-e7bb-4b3e-b051-01bcbe06b28e"),
+                            Id = new Guid("498bce84-0215-49d0-9fe2-f592d244e0c8"),
                             Capacity = 50,
-                            CreatedDate = new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4327),
+                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6114),
                             Name = "Airplane1",
                             Type = 2
                         });
@@ -370,13 +366,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Station", "Destination")
                         .WithMany()
                         .HasForeignKey("DestinationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Station", "Source")
                         .WithMany()
                         .HasForeignKey("SourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Vehicle", "Vehicle")

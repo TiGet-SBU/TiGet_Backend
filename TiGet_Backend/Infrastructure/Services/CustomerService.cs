@@ -4,38 +4,33 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs;
+using Application.DTOs.CustomerDTO.Auth;
 using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.IdentityModel.Tokens;
 
-public interface IAuthenticationService
+public class CustomerService : ICustomerService
 {
-    Task<string> RegisterAsync(UserRegisterDTO registerDTO);
-    Task<string> LoginAsync(UserLoginDTO loginDTO);
-}
-
-public class AuthenticationService : IAuthenticationService
-{
-    private readonly ICustomerRepository _userRepository; // Assume you have IUserRepository
+    private readonly IUnitOfWork _unitOfWork;
     private readonly string _jwtSecret = "your_jwt_secret_key"; // Replace with a secure key
     private readonly int _jwtExpirationInMinutes = 1440; // Token expiration time
 
-    public AuthenticationService(ICustomerRepository userRepository)
+    public CustomerService(IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<string> RegisterAsync(UserRegisterDTO registerDTO)
+    public async Task<CustomerRegisterResponse> Register(CustomerRegisterRequest req)
     {
-        // Validate input
-        if (string.IsNullOrEmpty(registerDTO.Email) || string.IsNullOrEmpty(registerDTO.Password))
+        if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
         {
             throw new ArgumentException("Email and password are required");
         }
 
         // Check if email is unique
-        if (await _userRepository.GetByConditionAsync(e => e.Email == registerDTO.Email) != null)
+        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email) != null)
         {
             throw new InvalidOperationException("Email is already registered");
         }
@@ -45,41 +40,50 @@ public class AuthenticationService : IAuthenticationService
         {
             Id = Guid.NewGuid(),
             Role = Role.Customer,
-            Email = registerDTO.Email,
-            PasswordHash =  HashPassword(registerDTO.Password),
-            PhoneNumber= registerDTO.PhoneNumber,
+            Email = req.Email,
+            PasswordHash = HashPassword(req.Password),
             CreatedDate = DateTime.Now,
         };
 
         // Save the user entity to the repository
-        await _userRepository.AddAsync(newUser);
+        await _unitOfWork.CustomerRepository.AddAsync(newUser);
 
         // Return a JWT token
-        return GenerateJwtToken(newUser);
+        var response = new CustomerRegisterResponse { 
+            Email = newUser.Email,
+            Role = newUser.Role,         
+        };
+        //return GenerateJwtToken(newUser);
+        return response;
     }
 
-    public async Task<string> LoginAsync(UserLoginDTO loginDTO)
+    public async Task<CustomerLoginResponse> Login(CustomerLoginRequest req)
     {
         // Validate input
-        if (string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Password))
+        if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
         {
             throw new ArgumentException("Email and password are required");
         }
 
         // Find the user by email
-        var user = await _userRepository.GetByConditionAsync(e => e.Email == loginDTO.Email);
+        var user = await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email);
 
         // Check if the user exists and the password is correct
-        if (user != null && VerifyPassword(loginDTO.Password, user.PasswordHash))
+        if (user != null && VerifyPassword(req.Password, user.PasswordHash))
         {
             // Return a JWT token
-            return GenerateJwtToken(user);
+            //return GenerateJwtToken(user);
+            var response = new CustomerLoginResponse { 
+                Email = user.Email ,
+                Role = user.Role,
+            };
         }
 
         throw new InvalidOperationException("Invalid login credentials");
     }
 
-    private string GenerateJwtToken(User user)
+
+    private string GenerateJwtToken(Customer user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_jwtSecret);

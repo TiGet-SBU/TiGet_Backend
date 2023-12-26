@@ -40,12 +40,12 @@ namespace Infrastructure.Extensions.Configurations
             builder.HasOne(e => e.Source)
                 .WithMany()
                 .HasForeignKey(e => e.SourceId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(e => e.Destination)
                 .WithMany()
                 .HasForeignKey(e => e.DestinationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

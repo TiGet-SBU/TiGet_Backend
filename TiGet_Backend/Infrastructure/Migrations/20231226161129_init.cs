@@ -14,7 +14,7 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "City",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -24,7 +24,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,7 +54,6 @@ namespace Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -96,9 +95,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Stations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stations_City_CityId",
+                        name: "FK_Stations_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "City",
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -129,14 +128,12 @@ namespace Infrastructure.Migrations
                         name: "FK_Tickets_Stations_DestinationId",
                         column: x => x.DestinationId,
                         principalTable: "Stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_Stations_SourceId",
                         column: x => x.SourceId,
                         principalTable: "Stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_Vehicles_VehicleId",
                         column: x => x.VehicleId,
@@ -175,20 +172,20 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "Id", "BirthDate", "CreatedDate", "Email", "FirstName", "Gender", "LastName", "PasswordHash", "PhoneNumber", "Role" },
-                values: new object[] { new Guid("819482b4-0b23-464d-87ce-cb1075b15ad2"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4059), "admin@admin.com", "", 0, "", "$2a$11$.64fLerPDfuVgkHnbF3o6uBF1MGQqfxYoPivqq8HkwvevmKIbT5gy", "", 0 });
+                columns: new[] { "Id", "CreatedDate", "Email", "FirstName", "Gender", "LastName", "PasswordHash", "PhoneNumber", "Role" },
+                values: new object[] { new Guid("3ff21282-a3c1-4bcb-b741-1118a95e40c7"), new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(5763), "admin@admin.com", "", 0, "", "$2a$11$.64fLerPDfuVgkHnbF3o6uBF1MGQqfxYoPivqq8HkwvevmKIbT5gy", "", 0 });
 
             migrationBuilder.InsertData(
                 table: "Vehicles",
                 columns: new[] { "Id", "Capacity", "CreatedDate", "Name", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("21aa447b-2423-4d3b-b54c-32b3daadfc96"), 88, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4325), "Train2", 1 },
-                    { new Guid("2e1edcb4-4ac5-45ab-86ee-bec088259c33"), 40, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4317), "Bus2", 0 },
-                    { new Guid("4cf96abf-6dbc-4081-abe8-a087ea14965d"), 20, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4320), "Bus3", 0 },
-                    { new Guid("9afaeb6b-39f7-4f21-a046-ff33e8e24376"), 70, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4322), "Train1", 1 },
-                    { new Guid("ccb24039-d4f0-45ff-96cc-b1eff1c2b371"), 30, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4310), "Bus1", 0 },
-                    { new Guid("e64018c0-e7bb-4b3e-b051-01bcbe06b28e"), 50, new DateTime(2023, 12, 26, 14, 56, 34, 129, DateTimeKind.Local).AddTicks(4327), "Airplane1", 2 }
+                    { new Guid("498bce84-0215-49d0-9fe2-f592d244e0c8"), 50, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6114), "Airplane1", 2 },
+                    { new Guid("797252cf-654a-47a1-a28f-bad5752b61fb"), 70, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6108), "Train1", 1 },
+                    { new Guid("972e5c86-4cdd-405d-a443-77fc06d532d5"), 20, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6104), "Bus3", 0 },
+                    { new Guid("c6ad78ed-a0dc-4644-ad40-22f59d61be5c"), 40, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6100), "Bus2", 0 },
+                    { new Guid("ea389a2f-872e-4598-8099-a2c631db68f3"), 30, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6095), "Bus1", 0 },
+                    { new Guid("fde2f1cd-3be5-4f43-8216-0ef6dc637e6f"), 88, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6111), "Train2", 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -249,7 +246,7 @@ namespace Infrastructure.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "City");
+                name: "Cities");
         }
     }
 }
