@@ -14,7 +14,7 @@ namespace Application.Interfaces.Repositories
 
 
         // repositories
-        public ICityRepositoty CityRepositoty { get; }
+        public ICityRepository CityRepositoty { get; }
         public ICompanyRepository CompanyRepository { get; }
         public ICustomerRepository CustomerRepository { get; }
         public IOrderRepository OrderRepository { get; }

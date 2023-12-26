@@ -8,10 +8,9 @@ namespace Application.Interfaces.Repositories
 {
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
-        Task<User> GetByIdAsync(Guid userId);
-        Task<User> GetByEmailAsync(string email);
+
 
         // do we really need? 
-        Task<bool> Exists(Func<User, bool> predicate);
+        // Task<bool> Exists(Func<User, bool> predicate);
     }
 }
