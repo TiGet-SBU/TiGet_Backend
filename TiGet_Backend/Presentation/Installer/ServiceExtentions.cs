@@ -1,4 +1,6 @@
 ﻿using Application;
+using Application.Interfaces.Services;
+using FluentAssertions.Common;
 using Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -13,6 +15,7 @@ namespace Presentation.Installer
         {
             builder.Services.ApplicationServiceConfiguration();
             builder.Services.InfrastructureServiceConfiguration();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
 
             builder.Services.RegisterControllers();
             builder.Services.AddEndpointsApiExplorer();
