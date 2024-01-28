@@ -9,8 +9,10 @@ namespace Application.DTOs.CustomerDTO
 {
     public class UpdateCustomerResponse
     {
-        public Guid Id { get; set; }
-        public string Email { get; set; }
+        public required string Email { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty; 
         public Role Role { get; set; }
         // Add other relevant properties to reflect the updated customer information
     }
