@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.CityDTO;
 using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class CityService
+    public class CityService : ICityService
     {
         private readonly IUnitOfWork _unitOfWork;
 

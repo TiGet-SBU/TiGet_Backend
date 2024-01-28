@@ -17,7 +17,7 @@ public class CustomerController : ControllerBase
     
     [HttpPost]
     [Route("singup")]
-    public async Task<IActionResult> Register([FromForm] CustomerRegisterRequest req)
+    public async Task<IActionResult> Register(CustomerRegisterRequest req)
     {
         try
         {
@@ -32,7 +32,7 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromForm] CustomerLoginRequest req)
+    public async Task<IActionResult> Login(CustomerLoginRequest req)
     {
         try
         {
