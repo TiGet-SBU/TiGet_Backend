@@ -1,0 +1,90 @@
+﻿using Application.DTOs.TicketDTO;
+using Application.Interfaces.Repositories;
+using Domain.Entities;
+using Infrastructure.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Interfaces.Services;
+using Microsoft.IdentityModel.Tokens;
+
+namespace Infrastructure.Services
+{
+    public class TicketService : ITicketService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public TicketService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<TicketAddResponse> AddTicket(TicketAddRequest request)
+        {
+            // Validation
+            if (request.VehicleId == Guid.Empty)
+            {
+                throw new ArgumentException("Vehicle ID is required");
+            }
+            // Add other validation rules as needed
+
+            // Check for unique constraints (if applicable)
+            if (await _unitOfWork.TicketRespsitory.GetByConditionAsync(e => e.VehicleId == request.VehicleId && e.TimeToGo == request.TimeToGo) != null)
+            {
+                throw new InvalidOperationException("A ticket with the same vehicle and time already exists");
+            }
+
+            // Create a new ticket entity
+            var newTicket = new Ticket
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                TimeToGo = request.TimeToGo,
+                Price = request.Price,
+                VehicleId = request.VehicleId,
+                CompanyId = (Guid)request.CompanyId,
+                SourceId = request.SourceId,
+                DestinationId = request.DestinationId,
+                Source = request.Source,
+                Destination = request.Destination
+            };
+
+            // Save the ticket entity to the repository
+            await _unitOfWork.TicketRespsitory.AddAsync(newTicket);
+            await _unitOfWork.SaveAsync();
+
+            // Return a response with ticket details
+            var response = new TicketAddResponse
+            {
+                Id = newTicket.Id,
+                TimeToGo = newTicket.TimeToGo,
+                Price = newTicket.Price,
+                // Add other relevant properties to the response
+            };
+
+            return response;
+        }
+
+        /*public async Task<TicketGetByIdResponse> GetTicketById(TicketGetByIdRequest request)
+        {
+
+        }
+        public async Task<TicketGetAllResponse> GetAllTickets(TicketGetAllRequest request)
+        {
+
+        }
+        public async Task<TicketUpdateResponse> UpdateTicket(TicketUpdateRequest request)
+        {
+
+        }
+        public async Task<TicketDeleteResponse> DeleteTicket(TicketDeleteRequest request)
+        {
+
+        }*/
+    }
+}
+
+
