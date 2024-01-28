@@ -1,14 +1,21 @@
-﻿namespace Presentation.Installer
+﻿using Microsoft.AspNetCore.Rewrite;
+
+namespace Presentation.Installer
 {
     public static class SetupMiddlewarePipeline
     {
         public static WebApplication SetupMiddlewares(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
+            
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TiGet API v1");
+            });
 
             app.UseHttpsRedirection();
 
