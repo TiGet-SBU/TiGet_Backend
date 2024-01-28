@@ -68,15 +68,66 @@ namespace Infrastructure.Services
             return response;
         }
 
-        /*public async Task<TicketGetByIdResponse> GetTicketById(TicketGetByIdRequest request)
+        public async Task<TicketGetByIdResponse> GetTicketById(TicketGetByIdRequest request)
         {
+            try
+            {
+                
+                Ticket ticket = await _unitOfWork.TicketRespsitory.GetByConditionAsync(e => e.Id==request.Id);
 
+                if (ticket != null)
+                {
+                    // Return the ticket if found
+                    return new TicketGetByIdResponse
+                    {
+                        Ticket = ticket,
+                        Success = true
+                    };
+                }
+                else
+                {
+                    // Return an error message if the ticket is not found
+                    return new TicketGetByIdResponse
+                    {
+                        Success = false,
+                        ErrorMessage = "Ticket not found"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new TicketGetByIdResponse
+                {
+                    Success = false,
+                    ErrorMessage = $"An error occurred: {ex.Message}"
+                };
+            }
         }
         public async Task<TicketGetAllResponse> GetAllTickets(TicketGetAllRequest request)
         {
+            try
+            {
+                
+                List<Ticket> tickets = (List<Ticket>)await _unitOfWork.TicketRespsitory.GetAllAsync();
 
+                // Return the list of tickets
+                return new TicketGetAllResponse
+                {
+                    Tickets = tickets,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new TicketGetAllResponse
+                {
+                    Success = false,
+                    ErrorMessage = $"An error occurred: {ex.Message}"
+                };
+            }
         }
-        public async Task<TicketUpdateResponse> UpdateTicket(TicketUpdateRequest request)
+
+        /*public async Task<TicketUpdateResponse> UpdateTicket(TicketUpdateRequest request)
         {
 
         }

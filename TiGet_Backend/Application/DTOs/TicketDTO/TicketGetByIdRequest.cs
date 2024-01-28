@@ -8,6 +8,6 @@ namespace Application.DTOs.TicketDTO
 {
     public class TicketGetByIdRequest
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
