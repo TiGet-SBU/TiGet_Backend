@@ -6,6 +6,7 @@ using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 public class CustomerService : ICustomerService
 {
@@ -24,8 +25,13 @@ public class CustomerService : ICustomerService
             throw new ArgumentException("Email and password are required");
         }
 
+        if (req.Password != req.PasswordRepeat)
+        {
+            throw new ArgumentException("Password and Repeat of Password is not the same");
+        }
+
         // Check if email is unique
-        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email) != null)
+        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower()) != null)
         {
             throw new InvalidOperationException("Email is already registered");
         }
@@ -35,7 +41,7 @@ public class CustomerService : ICustomerService
         {
             Id = Guid.NewGuid(),
             Role = Role.Customer,
-            Email = req.Email,
+            Email = req.Email.ToLower(),
             PasswordHash = AuthService.HashPassword(req.Password),
             CreatedDate = DateTime.Now,
         };
