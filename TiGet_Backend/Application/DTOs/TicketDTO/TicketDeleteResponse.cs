@@ -8,5 +8,6 @@ namespace Application.DTOs.TicketDTO
 {
     public class TicketDeleteResponse
     {
+        public bool Success { get; set; }
     }
 }

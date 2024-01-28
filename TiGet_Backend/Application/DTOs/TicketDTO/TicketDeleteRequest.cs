@@ -8,5 +8,6 @@ namespace Application.DTOs.TicketDTO
 {
     public class TicketDeleteRequest
     {
+        public Guid Id { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace Application.DTOs.TicketDTO
 {
     public record TicketGetAllRequest
     {
-        public required int first = 0;
-        public required int last = int.MaxValue;
-        public required Expression<Func<Ticket, bool>>? condition = null;
+        public int first = 0;
+        public int last = int.MaxValue;
+        public Expression<Func<Ticket, bool>>? condition = null;
     }
 }
