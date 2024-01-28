@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CustomerDTO.Auth;
+using Application.DTOs.CustomerDTO;
 using Application.DTOs.TicketDTO;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace Application.Interfaces.Services
         public Task<CustomerRegisterResponse> Register(CustomerRegisterRequest req);
         public Task<CustomerLoginResponse> Login(CustomerLoginRequest req);
         public Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req);
-
+        public Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest req); 
     }
 }

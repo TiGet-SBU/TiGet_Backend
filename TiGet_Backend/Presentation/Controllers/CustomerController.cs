@@ -2,6 +2,7 @@
 using Application.DTOs.CustomerDTO.Auth;
 using Application.Interfaces.Services;
 using Application.DTOs.TicketDTO;
+using Application.DTOs.CustomerDTO;
 
 [Route("api/customer")]
 [ApiController]
@@ -45,6 +46,21 @@ public class CustomerController : ControllerBase
         catch (Exception ex)
         {
             return Unauthorized(ex.Message);
+        }
+    }
+
+    [HttpPut]
+    [Route("update")]
+    public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest req)
+    {
+        try
+        {
+            var response = await _customerService.UpdateCustomer(req);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
 

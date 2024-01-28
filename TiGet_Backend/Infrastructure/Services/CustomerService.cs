@@ -1,4 +1,5 @@
-﻿using Application.DTOs.CustomerDTO.Auth;
+﻿using Application.DTOs.CustomerDTO;
+using Application.DTOs.CustomerDTO.Auth;
 using Application.DTOs.TicketDTO;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
@@ -86,6 +87,40 @@ public class CustomerService : ICustomerService
         }
 
         throw new InvalidOperationException("Invalid login credentials");
+    }
+
+    public async Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest req)
+    {
+        // Validation
+        if (req.Id.Equals(0))
+        {
+            throw new ArgumentException("Customer ID cannot be zero for update.");
+        }
+        // Add other validation rules for updated fields as needed
+
+        var existingCustomer = await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Id == req.Id);
+        if (existingCustomer == null)
+        {
+            throw new InvalidOperationException($"Customer with ID {req.Id} not found.");
+        }
+
+        // Update entity properties based on request
+        if (req.Email != null) existingCustomer.Email = req.Email;
+        // Update other non-null fields from request (e.g., Name, PasswordHash, etc.)
+
+        _unitOfWork.CustomerRepository.Update(existingCustomer);
+        await _unitOfWork.SaveAsync();
+
+        // Return a response with updated customer details
+        var response = new UpdateCustomerResponse
+        {
+            Id = existingCustomer.Id,
+            Email = existingCustomer.Email,
+            Role = existingCustomer.Role,
+            // Add other relevant properties to the response
+        };
+
+        return response;
     }
 
     public async Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req)

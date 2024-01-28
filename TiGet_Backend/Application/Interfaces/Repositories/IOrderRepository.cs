@@ -9,5 +9,6 @@ namespace Application.Interfaces.Repositories
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
+        // grp by
     }
 }
