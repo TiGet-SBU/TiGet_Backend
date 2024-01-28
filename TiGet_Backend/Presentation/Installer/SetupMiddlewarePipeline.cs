@@ -18,6 +18,8 @@
 
             app.MapControllers();
 
+            app.UseCors("AllowAllOrigins");
+
             return app;
         }
     }
