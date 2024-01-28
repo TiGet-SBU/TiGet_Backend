@@ -16,7 +16,7 @@ public class CustomerService : ICustomerService
     }
 
 
-    public async Task<CustomerRegisterResponse> Register(CustomerRegisterRequest req)
+    public async Task<RegisterResponse> Register(RegisterRequest req)
     {
         if (string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
         {
@@ -29,7 +29,8 @@ public class CustomerService : ICustomerService
         }
 
         // Check if email is unique
-        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower()) != null)
+        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower()) != null
+            || await _unitOfWork.CompanyRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower()) != null)
         {
             throw new InvalidOperationException("Email is already registered");
         }
@@ -49,7 +50,7 @@ public class CustomerService : ICustomerService
         await _unitOfWork.SaveAsync();
 
         // Return a response with user details
-        var response = new CustomerRegisterResponse
+        var response = new RegisterResponse
         {
             Email = newUser.Email,
             Role = newUser.Role,

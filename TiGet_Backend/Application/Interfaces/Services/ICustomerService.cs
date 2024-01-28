@@ -11,7 +11,7 @@ namespace Application.Interfaces.Services
 {
     public interface ICustomerService
     {
-        public Task<CustomerRegisterResponse> Register(CustomerRegisterRequest req);
+        public Task<RegisterResponse> Register(RegisterRequest req);
         public Task<CustomerLoginResponse> Login(CustomerLoginRequest req);
         public Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req);
         public Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest req); 

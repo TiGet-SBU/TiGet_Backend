@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class CityService : ICityService
+    public class CityServices : ICityService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CityService(IUnitOfWork unitOfWork)
+        public CityServices(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

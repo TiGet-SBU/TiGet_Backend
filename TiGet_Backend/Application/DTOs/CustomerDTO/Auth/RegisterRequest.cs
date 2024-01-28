@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.CustomerDTO.Auth
 {
-    public record CustomerRegisterRequest
+    public record RegisterRequest
     {
         public required string Email { get; set; }
         public required string Password { get; set; }

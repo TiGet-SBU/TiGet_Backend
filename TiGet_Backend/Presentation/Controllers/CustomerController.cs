@@ -15,39 +15,6 @@ public class CustomerController : ControllerBase
         _customerService = customerService;
     }
 
-    
-    [HttpPost]
-    [Route("singup")]
-    public async Task<IActionResult> Register(CustomerRegisterRequest req)
-    {
-        try
-        {
-            var response1 = await _customerService.Register(req);
-            if (response1 == null) return BadRequest("Register falied!");
-
-            var response2 = await _customerService.Login(new CustomerLoginRequest { Email = req.Email, Password = req.Password });
-            return Ok(response2);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
-
-    [HttpPost]
-    [Route("login")]
-    public async Task<IActionResult> Login(CustomerLoginRequest req)
-    {
-        try
-        {
-            var response = await _customerService.Login(req);
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            return Unauthorized(ex.Message);
-        }
-    }
 
     [HttpPut]
     [Route("update")]
