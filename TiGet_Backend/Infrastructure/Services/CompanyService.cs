@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    internal class CompanyService : ICompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly IUnitOfWork _unitOfWork;
 

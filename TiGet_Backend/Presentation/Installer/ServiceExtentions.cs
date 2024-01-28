@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using FluentAssertions.Common;
 using Infrastructure;
+using Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -16,6 +17,7 @@ namespace Presentation.Installer
             builder.Services.ApplicationServiceConfiguration();
             builder.Services.InfrastructureServiceConfiguration();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<ICompanyService, CompanyService>();
 
             builder.Services.RegisterControllers();
             builder.Services.AddEndpointsApiExplorer();
