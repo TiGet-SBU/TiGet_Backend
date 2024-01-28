@@ -126,7 +126,8 @@ public class CustomerService : ICustomerService
         return response;
     }
 
-    /*
+
+    
     public async Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req)
     {
         var ans = await _unitOfWork.TicketRespsitory.GetAllAsync(req.first, req.last, req.condition,
@@ -144,5 +145,5 @@ public class CustomerService : ICustomerService
 
         return response;
     }
-    */
+    
 }
