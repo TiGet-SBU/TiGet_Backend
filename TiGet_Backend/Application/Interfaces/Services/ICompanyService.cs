@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CompanyDTO;
+using Application.DTOs.CustomerDTO;
 using Application.DTOs.CustomerDTO.Auth;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace Application.Interfaces.Services
         public Task<RegisterResponse> Register(RegisterRequest req);
 
         public Task<CompanyLoginResponse> Login(CompanyLoginRequest req);
+
+        public Task<UpdateCompanyResponse> UpdateCompany(UpdateCompanyRequest req);
 
     }
 }

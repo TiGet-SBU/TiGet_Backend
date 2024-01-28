@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CompanyDTO;
+using Application.DTOs.CustomerDTO;
 using Application.DTOs.CustomerDTO.Auth;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
@@ -98,5 +99,39 @@ namespace Infrastructure.Services
 
             throw new InvalidOperationException("Invalid login credentials");
         }
+
+        public async Task<UpdateCompanyResponse> UpdateCompany(UpdateCompanyRequest req)
+        {
+            if (req.Email == null)
+            {
+                throw new ArgumentException("Email should not be empty");
+            }
+
+            var existingCompany = await _unitOfWork.CompanyRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower());
+            if (existingCompany == null)
+            {
+                throw new InvalidOperationException("Company not found");
+            }
+
+            existingCompany.Name = req.Name;
+            existingCompany.PhoneNumber = req.PhoneNumber;
+
+            _unitOfWork.CompanyRepository.Update(existingCompany);
+            await _unitOfWork.SaveAsync();
+
+            // Return a response with updated customer details
+            var response = new UpdateCompanyResponse
+            {
+                Email = existingCompany.Email,
+                Role = existingCompany.Role,
+                Name = existingCompany.Name,
+                PhoneNumber = existingCompany.PhoneNumber
+            };
+
+            return response;
+        }
+
+        
+
     }
 }
