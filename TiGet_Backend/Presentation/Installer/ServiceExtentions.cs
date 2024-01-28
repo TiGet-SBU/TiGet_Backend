@@ -21,7 +21,19 @@ namespace Presentation.Installer
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.RegisterSwaggerGen();
             builder.Services.RegisterJwtBarear(builder.Configuration);
-            
+
+            // Add CORS services
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
+
             return builder;
         }
 
