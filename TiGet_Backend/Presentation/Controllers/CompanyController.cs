@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.CompanyDTO;
 using Application.DTOs.CustomerDTO;
+using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -14,10 +16,11 @@ namespace Presentation.Controllers
 
 
         private readonly ICompanyService _companyService;
-
-        public CompanyController(ICompanyService companyService)
+        private readonly IUnitOfWork _unitOfWork;
+        public CompanyController(ICompanyService companyService, IUnitOfWork unitOfWork)
         {
             _companyService = companyService;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPut]
@@ -34,5 +37,14 @@ namespace Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("stations")]
+        public async Task<IEnumerable<Station>> GetAllStations()
+        {
+            return await _unitOfWork.StationRepository.GetAllAsync();
+        }
+
+
     }
 }
