@@ -171,21 +171,41 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "CityName", "CreatedDate", "Province" },
+                values: new object[,]
+                {
+                    { new Guid("12d95f4f-9077-4a37-b435-72cb39a57b59"), "Karaj", new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1061), "Karaj" },
+                    { new Guid("649c0458-3bd7-4836-a95c-05bb8e3d1dd6"), "Hamedan", new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1062), "Hamedan" },
+                    { new Guid("d592c5fb-8a94-4bd1-8404-a07adf270c4f"), "Tehran", new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1060), "Tehran" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "Id", "CreatedDate", "Email", "FirstName", "Gender", "LastName", "PasswordHash", "PhoneNumber", "Role" },
-                values: new object[] { new Guid("3ff21282-a3c1-4bcb-b741-1118a95e40c7"), new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(5763), "admin@admin.com", "", 0, "", "$2a$11$.64fLerPDfuVgkHnbF3o6uBF1MGQqfxYoPivqq8HkwvevmKIbT5gy", "", 0 });
+                values: new object[] { new Guid("576a1ee3-46e7-4449-a515-1909073f1f0c"), new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(867), "admin@admin.com", "", 0, "", "$2a$11$.64fLerPDfuVgkHnbF3o6uBF1MGQqfxYoPivqq8HkwvevmKIbT5gy", "", 0 });
 
             migrationBuilder.InsertData(
                 table: "Vehicles",
                 columns: new[] { "Id", "Capacity", "CreatedDate", "Name", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("498bce84-0215-49d0-9fe2-f592d244e0c8"), 50, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6114), "Airplane1", 2 },
-                    { new Guid("797252cf-654a-47a1-a28f-bad5752b61fb"), 70, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6108), "Train1", 1 },
-                    { new Guid("972e5c86-4cdd-405d-a443-77fc06d532d5"), 20, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6104), "Bus3", 0 },
-                    { new Guid("c6ad78ed-a0dc-4644-ad40-22f59d61be5c"), 40, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6100), "Bus2", 0 },
-                    { new Guid("ea389a2f-872e-4598-8099-a2c631db68f3"), 30, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6095), "Bus1", 0 },
-                    { new Guid("fde2f1cd-3be5-4f43-8216-0ef6dc637e6f"), 88, new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6111), "Train2", 1 }
+                    { new Guid("428cc3e8-8be9-426a-999e-ce71fd29cb8f"), 50, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1032), "Airplane1", 2 },
+                    { new Guid("7dd0f551-91a4-4929-896f-f42bd8095a25"), 40, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1015), "Bus2", 0 },
+                    { new Guid("806dc0fe-6e6a-4900-bb8d-cb583d27887e"), 70, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1029), "Train1", 1 },
+                    { new Guid("b07828fb-82f6-4aa5-9992-a48c9994b932"), 88, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1030), "Train2", 1 },
+                    { new Guid("ccc08e7c-2a74-4fef-9efc-0b584ae1dadf"), 20, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1017), "Bus3", 0 },
+                    { new Guid("fe0a37a9-ee2e-4195-925b-327a7dafd4dd"), 30, new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1013), "Bus1", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Stations",
+                columns: new[] { "Id", "Address", "CityId", "CreatedDate", "Name", "vehicleType" },
+                values: new object[,]
+                {
+                    { new Guid("086a738e-a1a5-45ca-b3f1-ac1928458500"), "some address", new Guid("d592c5fb-8a94-4bd1-8404-a07adf270c4f"), new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1110), "station 1", 0 },
+                    { new Guid("39fa5ea6-c9b3-420a-932e-6cb4b38fc8b5"), "some addres", new Guid("649c0458-3bd7-4836-a95c-05bb8e3d1dd6"), new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1117), "station 3", 0 },
+                    { new Guid("a56f9fe4-4657-4115-8501-2e8e110c065a"), "some address", new Guid("12d95f4f-9077-4a37-b435-72cb39a57b59"), new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1112), "station 2", 0 }
                 });
 
             migrationBuilder.CreateIndex(

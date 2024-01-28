@@ -42,6 +42,29 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d592c5fb-8a94-4bd1-8404-a07adf270c4f"),
+                            CityName = "Tehran",
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1060),
+                            Province = "Tehran"
+                        },
+                        new
+                        {
+                            Id = new Guid("12d95f4f-9077-4a37-b435-72cb39a57b59"),
+                            CityName = "Karaj",
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1061),
+                            Province = "Karaj"
+                        },
+                        new
+                        {
+                            Id = new Guid("649c0458-3bd7-4836-a95c-05bb8e3d1dd6"),
+                            CityName = "Hamedan",
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1062),
+                            Province = "Hamedan"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Company", b =>
@@ -127,8 +150,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3ff21282-a3c1-4bcb-b741-1118a95e40c7"),
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(5763),
+                            Id = new Guid("576a1ee3-46e7-4449-a515-1909073f1f0c"),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(867),
                             Email = "admin@admin.com",
                             FirstName = "",
                             Gender = 0,
@@ -206,6 +229,35 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Stations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("086a738e-a1a5-45ca-b3f1-ac1928458500"),
+                            Address = "some address",
+                            CityId = new Guid("d592c5fb-8a94-4bd1-8404-a07adf270c4f"),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1110),
+                            Name = "station 1",
+                            vehicleType = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("a56f9fe4-4657-4115-8501-2e8e110c065a"),
+                            Address = "some address",
+                            CityId = new Guid("12d95f4f-9077-4a37-b435-72cb39a57b59"),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1112),
+                            Name = "station 2",
+                            vehicleType = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("39fa5ea6-c9b3-420a-932e-6cb4b38fc8b5"),
+                            Address = "some addres",
+                            CityId = new Guid("649c0458-3bd7-4836-a95c-05bb8e3d1dd6"),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1117),
+                            Name = "station 3",
+                            vehicleType = 0
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Ticket", b =>
@@ -274,49 +326,49 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ea389a2f-872e-4598-8099-a2c631db68f3"),
+                            Id = new Guid("fe0a37a9-ee2e-4195-925b-327a7dafd4dd"),
                             Capacity = 30,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6095),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1013),
                             Name = "Bus1",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("c6ad78ed-a0dc-4644-ad40-22f59d61be5c"),
+                            Id = new Guid("7dd0f551-91a4-4929-896f-f42bd8095a25"),
                             Capacity = 40,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6100),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1015),
                             Name = "Bus2",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("972e5c86-4cdd-405d-a443-77fc06d532d5"),
+                            Id = new Guid("ccc08e7c-2a74-4fef-9efc-0b584ae1dadf"),
                             Capacity = 20,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6104),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1017),
                             Name = "Bus3",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("797252cf-654a-47a1-a28f-bad5752b61fb"),
+                            Id = new Guid("806dc0fe-6e6a-4900-bb8d-cb583d27887e"),
                             Capacity = 70,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6108),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1029),
                             Name = "Train1",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("fde2f1cd-3be5-4f43-8216-0ef6dc637e6f"),
+                            Id = new Guid("b07828fb-82f6-4aa5-9992-a48c9994b932"),
                             Capacity = 88,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6111),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1030),
                             Name = "Train2",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("498bce84-0215-49d0-9fe2-f592d244e0c8"),
+                            Id = new Guid("428cc3e8-8be9-426a-999e-ce71fd29cb8f"),
                             Capacity = 50,
-                            CreatedDate = new DateTime(2023, 12, 26, 19, 41, 29, 495, DateTimeKind.Local).AddTicks(6114),
+                            CreatedDate = new DateTime(2024, 1, 29, 1, 18, 22, 519, DateTimeKind.Local).AddTicks(1032),
                             Name = "Airplane1",
                             Type = 2
                         });

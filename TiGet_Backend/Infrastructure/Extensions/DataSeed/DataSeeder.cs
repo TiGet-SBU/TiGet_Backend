@@ -16,7 +16,7 @@ namespace Infrastructure.Extensions.DataSeed
         {
             modelBuilder.SeedAdmins();
             modelBuilder.SeedVehicles();
-            //modelBuilder.SeedStations();
+            modelBuilder.SeedStations();
         }
 
         private static void SeedAdmins(this ModelBuilder modelBuilder)
@@ -91,28 +91,64 @@ namespace Infrastructure.Extensions.DataSeed
 
         private static void SeedStations(this ModelBuilder modelBuilder)
         {
-            Guid Id = Guid.NewGuid();
-            modelBuilder.Entity<Station>().HasData(
-               
-                    new Station
-                    {
-                        Name = "Test station",
-                        Id = Guid.NewGuid(),
-                        CityId = Id,
-                        City = new City {
-                            Id = Id,
-                            CityName = "Tehran",
-                            Province = "Tehran",
-                            CreatedDate = DateTime.Now
-                        },
-                        //Location = new Location { x = 123, y = 132},
-                        Address = "some address",
-                        vehicleType = VehicleType.Bus,
-                        CreatedDate = DateTime.Now,
-                       
-                    }
+            Guid Id1 = Guid.NewGuid();
+            Guid Id2 = Guid.NewGuid();
+            Guid Id3 = Guid.NewGuid();
 
-                );
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    Id = Id1,
+                    CityName = "Tehran",
+                    Province = "Tehran",
+                    CreatedDate = DateTime.Now
+                },
+                new City
+                {
+                    Id = Id2,
+                    CityName = "Karaj",
+                    Province = "Karaj",
+                    CreatedDate = DateTime.Now
+                },
+                new City
+                {
+                    Id = Id3,
+                    CityName = "Hamedan",
+                    Province = "Hamedan",
+                    CreatedDate = DateTime.Now
+                }
+
+            );
+
+            modelBuilder.Entity<Station>().HasData(
+                new Station
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "station 1",
+                    CityId = Id1,
+                    Address = "some address",
+                    vehicleType = VehicleType.Bus,
+                    CreatedDate = DateTime.Now
+                },
+                new Station
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "station 2",
+                    CityId = Id2,
+                    Address = "some address",
+                    vehicleType = VehicleType.Bus,
+                    CreatedDate = DateTime.Now
+                },
+                new Station
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "station 3",
+                    CityId = Id3,
+                    Address = "some addres",
+                    vehicleType = VehicleType.Bus,
+                    CreatedDate = DateTime.Now
+                }
+            );
         }
     }
 }
