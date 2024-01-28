@@ -12,17 +12,17 @@ namespace Domain.Entities
         public required DateTime TimeToGo { get; set; }
         public required double Price { get; set; }
 
-        public required Guid VehicleId { get; set; }
+        public Guid VehicleId { get; set; }
         public Vehicle? Vehicle { get; set; }
 
-        public required Guid CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
         public Company? Company{ get; set;}
 
         public required Guid SourceId { get; set; }
-        public required Station Source { get; set; }
+        public Station Source { get; set; }
 
         public required Guid DestinationId { get; set; }
-        public required Station Destination { get; set; }
+        public Station Destination { get; set; }
 
     }
 }

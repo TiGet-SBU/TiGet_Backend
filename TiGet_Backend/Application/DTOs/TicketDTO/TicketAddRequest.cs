@@ -14,8 +14,6 @@ namespace Application.DTOs.TicketDTO
         public Guid VehicleId { get; set; }
         public Guid? CompanyId { get; set; }
         public Guid SourceId { get; set; }
-        public Station Source { get; set; }
         public Guid DestinationId { get; set; }
-        public Station Destination { get; set; }
     }
 }

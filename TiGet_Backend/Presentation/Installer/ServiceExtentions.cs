@@ -18,6 +18,7 @@ namespace Presentation.Installer
             builder.Services.InfrastructureServiceConfiguration();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ICompanyService, CompanyService>();
+            builder.Services.AddScoped<ITicketService, TicketService>();
 
             builder.Services.RegisterControllers();
             builder.Services.AddEndpointsApiExplorer();

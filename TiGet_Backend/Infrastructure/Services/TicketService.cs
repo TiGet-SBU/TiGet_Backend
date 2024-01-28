@@ -17,6 +17,7 @@ namespace Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
+
         public TicketService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -24,12 +25,6 @@ namespace Infrastructure.Services
 
         public async Task<TicketAddResponse> AddTicket(TicketAddRequest request)
         {
-            // Validation
-            if (request.VehicleId == Guid.Empty)
-            {
-                throw new ArgumentException("Vehicle ID is required");
-            }
-            // Add other validation rules as needed
 
             // Check for unique constraints (if applicable)
             if (await _unitOfWork.TicketRespsitory.GetByConditionAsync(e => e.VehicleId == request.VehicleId && e.TimeToGo == request.TimeToGo) != null)
@@ -45,14 +40,11 @@ namespace Infrastructure.Services
                 TimeToGo = request.TimeToGo,
                 Price = request.Price,
                 VehicleId = request.VehicleId,
-                CompanyId = (Guid)request.CompanyId,
+                //CompanyId = (Guid)request.CompanyId,
                 SourceId = request.SourceId,
                 DestinationId = request.DestinationId,
-                Source = request.Source,
-                Destination = request.Destination
             };
 
-            // Save the ticket entity to the repository
             await _unitOfWork.TicketRespsitory.AddAsync(newTicket);
             await _unitOfWork.SaveAsync();
 
@@ -60,11 +52,11 @@ namespace Infrastructure.Services
             var response = new TicketAddResponse
             {
                 Id = newTicket.Id,
-                TimeToGo = newTicket.TimeToGo,
                 Price = newTicket.Price,
-                // Add other relevant properties to the response
+                TimeToGo = request.TimeToGo,
             };
 
+           
             return response;
         }
 
