@@ -4,9 +4,7 @@ using Application.DTOs.TicketDTO;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
-using Domain.Enums;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 public class CustomerService : ICustomerService
 {
@@ -40,7 +38,7 @@ public class CustomerService : ICustomerService
         var newUser = new Customer
         {
             Id = Guid.NewGuid(),
-            Role = Role.Customer,
+            Role = req.Role,
             Email = req.Email.ToLower(),
             PasswordHash = AuthService.HashPassword(req.Password),
             CreatedDate = DateTime.Now,
