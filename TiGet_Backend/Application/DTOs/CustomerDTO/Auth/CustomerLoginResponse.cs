@@ -11,7 +11,11 @@ namespace Application.DTOs.CustomerDTO.Auth
     {
         public required string Email { get; set; }
         public required Role Role { get; set; }
-        public string Name { get; set; }
-        public string Token { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public Gender Gender { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
+        public required string Token { get; set; }
     }
 }

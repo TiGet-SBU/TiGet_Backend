@@ -21,8 +21,11 @@ public class CustomerController : ControllerBase
     {
         try
         {
-            var response = await _customerService.Register(req);
-            return Ok(response);
+            var response1 = await _customerService.Register(req);
+            if (response1 == null) return BadRequest("Register falied!");
+
+            var response2 = await _customerService.Login(new CustomerLoginRequest { Email = req.Email, Password = req.Password });
+            return Ok(response2);
         }
         catch (Exception ex)
         {

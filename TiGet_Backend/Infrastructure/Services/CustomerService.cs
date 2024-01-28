@@ -74,7 +74,11 @@ public class CustomerService : ICustomerService
             {
                 Email = user.Email,
                 Role = user.Role,
-                Name = user.LastName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                BirthDate = user.BirthDate,
+                Gender = user.Gender,
+                PhoneNumber = user.PhoneNumber, 
                 Token = token
             };
 
