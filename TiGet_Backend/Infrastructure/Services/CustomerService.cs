@@ -4,7 +4,6 @@ using Application.DTOs.TicketDTO;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
-using Domain.Enums;
 using Infrastructure.Services;
 
 public class CustomerService : ICustomerService
@@ -24,8 +23,13 @@ public class CustomerService : ICustomerService
             throw new ArgumentException("Email and password are required");
         }
 
+        if (req.Password != req.PasswordRepeat)
+        {
+            throw new ArgumentException("Password and Repeat of Password is not the same");
+        }
+
         // Check if email is unique
-        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email) != null)
+        if (await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email.ToLower()) != null)
         {
             throw new InvalidOperationException("Email is already registered");
         }
@@ -34,8 +38,8 @@ public class CustomerService : ICustomerService
         var newUser = new Customer
         {
             Id = Guid.NewGuid(),
-            Role = Role.Customer,
-            Email = req.Email,
+            Role = req.Role,
+            Email = req.Email.ToLower(),
             PasswordHash = AuthService.HashPassword(req.Password),
             CreatedDate = DateTime.Now,
         };
@@ -91,22 +95,20 @@ public class CustomerService : ICustomerService
 
     public async Task<UpdateCustomerResponse> UpdateCustomer(UpdateCustomerRequest req)
     {
-        // Validation
-        if (req.Id.Equals(0))
+        if (req.Email == null)
         {
-            throw new ArgumentException("Customer ID cannot be zero for update.");
+            throw new ArgumentException("Email should not be empty");
         }
-        // Add other validation rules for updated fields as needed
 
-        var existingCustomer = await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Id == req.Id);
+        var existingCustomer = await _unitOfWork.CustomerRepository.GetByConditionAsync(e => e.Email == req.Email);
         if (existingCustomer == null)
         {
-            throw new InvalidOperationException($"Customer with ID {req.Id} not found.");
+            throw new InvalidOperationException("Customer not found");
         }
 
-        // Update entity properties based on request
-        if (req.Email != null) existingCustomer.Email = req.Email;
-        // Update other non-null fields from request (e.g., Name, PasswordHash, etc.)
+        existingCustomer.FirstName = req.FirstName;
+        existingCustomer.LastName = req.LastName;
+        existingCustomer.PhoneNumber = req.PhoneNumber;
 
         _unitOfWork.CustomerRepository.Update(existingCustomer);
         await _unitOfWork.SaveAsync();
@@ -114,15 +116,18 @@ public class CustomerService : ICustomerService
         // Return a response with updated customer details
         var response = new UpdateCustomerResponse
         {
-            Id = existingCustomer.Id,
             Email = existingCustomer.Email,
             Role = existingCustomer.Role,
-            // Add other relevant properties to the response
+            FirstName = existingCustomer.FirstName,
+            LastName = existingCustomer.LastName,
+            PhoneNumber = existingCustomer.PhoneNumber
         };
 
         return response;
     }
 
+
+    
     public async Task<IEnumerable<TicketGetResponse>> GetAllTickets(TicketGetAllRequest req)
     {
         var ans = await _unitOfWork.TicketRespsitory.GetAllAsync(req.first, req.last, req.condition,
@@ -140,5 +145,5 @@ public class CustomerService : ICustomerService
 
         return response;
     }
-
+    
 }
