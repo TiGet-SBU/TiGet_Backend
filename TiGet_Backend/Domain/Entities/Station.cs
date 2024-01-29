@@ -16,6 +16,11 @@ namespace Domain.Entities
         public City? City { get; set; }
         // public Location Location { get; set; }
         public string Address { get; set; } = string.Empty;
-        public required VehicleType vehicleType { get; set; } 
+        public required VehicleType vehicleType { get; set; }
+
+        public static implicit operator Station(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

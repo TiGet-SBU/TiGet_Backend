@@ -12,6 +12,7 @@ namespace Application.DTOs.TicketDTO
         public Guid Id { get; set; }
         public DateTime TimeToGo { get; set; }
         public double Price { get; set; }
+        public bool Success { get; set; }
         // Add other relevant properties as needed, such as:
         // - VehicleId
         // - CompanyId
